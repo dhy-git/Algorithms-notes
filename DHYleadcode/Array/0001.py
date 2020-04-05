@@ -8,3 +8,16 @@
     因为 nums[0] + nums[1] = 2 + 7 = 9
     所以返回 [0, 1]
 '''
+
+def fun(A,target):
+    l = len(A)
+    for i in range(l):
+        for j in range(i+1,l):
+            if(A[i]+A[j] == target):
+                return [i,j]
+    else:
+        return None
+        
+nums = [2, 7, 11, 15]
+target = 9
+print(fun(nums, target))
