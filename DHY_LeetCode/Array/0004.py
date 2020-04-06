@@ -26,33 +26,39 @@
 '''
 功能： 递归实现寻找有序数组A[i]~A[n]、B[j]~B[m]中第x小的数，并返回其下标
 '''
-def find_index_x(A,B,i,j,x):
-    #边界条件
-    if(i > len(A)-1):
-        return B[j+x-1]
-    if(j > len(B)-1):
-        return A[i+x-1]
-    if(x == 1):
-        return (min(A[i],B[j]))
-    
-    #递归
-    index_midA = i+int(x/2)-1
-    index_midB = j+int(x/2)-1
-    new_x = x - int(x/2)
-    if(A[index_midA] < B[index_midB]):
-        print("cutA  %d %d"%(i, j))
-        return find_index_x(A,B,index_midA+1,j,new_x)
-    else:
-        print("cutB  %d %d"%(i, j))
-        return find_index_x(A,B,i,index_midB+1,new_x)
+#本地编译加入 Python3 类型注释模块
+from typing import List
 
-def fun(A,B):
-    m = len(A)
-    n = len(B)
-    return (find_index_x(A,B,0,0,int((m+n+1)/2)) + find_index_x(A,B,0,0,int((m+n+2)/2)))/2
+#LeetCode 提交代码：
+class Solution:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        m = len(nums1)
+        n = len(nums2)
+        return (self.find_index_x(nums1, nums2, 0, 0, int((m+n+1)/2)) + self.find_index_x(nums1, nums2, 0, 0, int((m+n+2)/2)))/2
 
+    def find_index_x(self, A, B, i, j, x):
+        #边界条件
+        if(i > len(A)-1):
+            return B[j+x-1]
+        if(j > len(B)-1):
+            return A[i+x-1]
+        if(x == 1):
+            return (min(A[i],B[j]))
+        
+        #递归
+        index_midA = i+int(x/2)-1
+        index_midB = j+int(x/2)-1
+        new_x = x - int(x/2)
+        if(A[index_midA] < B[index_midB]):
+            #print("cutA  %d %d"%(i, j))
+            return self.find_index_x(A,B,index_midA+1,j,new_x)
+        else:
+            #print("cutB  %d %d"%(i, j))
+            return self.find_index_x(A,B,i,index_midB+1,new_x)
 
-#测试代码
+#本地测试代码：
 nums1 = [10, 20, 30, 40]
 nums2 = [50, 60, 70, 80]
-print(fun(nums1,nums2))
+sol = Solution()
+ans = sol.findMedianSortedArrays(nums1, nums2)
+print(ans)
