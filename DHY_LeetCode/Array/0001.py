@@ -9,15 +9,25 @@
     所以返回 [0, 1]
 '''
 
-def fun(A,target):
-    l = len(A)
-    for i in range(l):
-        for j in range(i+1,l):
-            if(A[i]+A[j] == target):
-                return [i,j]
-    else:
-        return None
+'''
+解： 哈希表原理查询 target- nums[i]是否存在，时间复杂度O(n)
+'''
+from typing import List
+# @lc code=start
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        l = len(nums)
+        map_num = dict()
+        for i in range(l):
+            temp = target - nums[i]
+            if(temp in map_num):
+                return [map_num[temp],i]
+            map_num[nums[i]] = i
         
-nums = [2, 7, 11, 15]
-target = 9
-print(fun(nums, target))
+# @lc code=end
+
+'''
+29/29 cases passed (56 ms)
+Your runtime beats 66.65 % of python3 submissions
+Your memory usage beats 6.35 % of python3 submissions (14.8 MB)
+'''
