@@ -18,51 +18,48 @@
 
 '''
 解： 两数之和问题
-'''
+''' 
 from typing import List
 # @lc code=start
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         result = []
         k = len(nums)
-        #print(nums)
+        temp = None
         for i in range(k):
-            temp = -nums[i]
-            
-            new_nums = nums[:]
-            new_nums.pop(i)
-            #print("nums = ",nums)
-            #print("search for",temp, "in", new_nums)
-            ret = self.twoSum(new_nums, temp)
-            if(ret != None):
-                ret.append(nums[i])
-                ret = sorted(ret)
-                if ret not in result:
-                    result.append(ret)
+            if(-nums[i] != temp):       #跳过重复元素
+                temp = -nums[i]
+                new_nums = nums[:]
+                new_nums.pop(i)
+                #print("nums = ",nums)
+                #print("search for",temp, "in", new_nums)
+                ret = self.twoSum(new_nums, temp)
+                if(ret != None):
+                    for each in ret:
+                        each.append(nums[i])
+                        each = sorted(each)
+                        if each not in result:
+                            result.append(each)
         #print(result)
         return result
         
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         l = len(nums)
+        #print('find',target,'in',nums)
+        stack = []
         map_two = dict()
         for i in range(l):
             temp = target - nums[i]
             if(temp in map_two):
-                return [nums[map_two[temp]],nums[i]]
+                new = [nums[map_two[temp]],nums[i]]
+                if new not in stack:
+                    stack.append(new)
             map_two[nums[i]] = i
-        return None
+        #print('  result',stack)
+        return stack
 # @lc code=end
-
 
 '''
 Submission未通过
-
-Wrong Answer
-123/313 cases passed (N/A)
-Testcase
-[-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6]
-Answer
-[[-4,2,2],[-2,0,2],[-4,1,3],[-2,-2,4],[-4,-2,6]]
-Expected Answer
-[[-4,-2,6],[-4,0,4],[-4,1,3],[-4,2,2],[-2,-2,4],[-2,0,2]]
+311/313 cases passed (N/A)
 '''
