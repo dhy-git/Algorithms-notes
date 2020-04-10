@@ -55,7 +55,7 @@ class Solution:
                 return [-1,-1]
     #消除二进制数段的高位0
     def pop_zero(self, B: List[int]) -> List[int]: 
-        for i in range(len(B)):
+        while B:
             if B[0] == 0:
                 B.pop(0)
             else:
