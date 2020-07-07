@@ -20,38 +20,42 @@ Right = lambda i: 2*i+1
 Msx_Heapify 维护最大堆性质的重要过程
     输入：数组A 和下标i
 '''
-def Max_Heapify(A, i):
-    l = Left(i)
-    r = Right(i)
-    if(l<=HeapSize and A[l]>A[i]):
-        largest = l
-    else:
-        largest = i
-    if(r <= HeapSize and A[r]>A[i]):
-        largest = r
-    if(largest != i):
-        A[i], A[largest] = A[largest], A[i]
-        Max_Heapify(A, largest)
+class Max_Heap:
+    def __init__(self,A):
+        self.HeapSize = len(A)-1
+    def Max_Heapify(self, A, i):
+        l = Left(i)
+        r = Right(i)
+        if(l <= self.HeapSize and  A[l]> A[i]):
+            largest = l
+        else:
+            largest = i
+        if(r <= self.HeapSize and  A[r]> A[largest]):
+            largest = r
+
+        if(largest != i):
+            A[i], A[largest] = A[largest],  A[i]
+            self.Max_Heapify(A, largest)
+
+    def Build_Max_heap(self, A):
+        max = math.floor(len(A)/2)
+        for i in range(max, -1, -1):
+            self.Max_Heapify(A, i)
+
+    def HeapSort(self, A):
+        self.Build_Max_heap(A)
+        print(A)
+        for i in range(len(A)-1,0,-1):
+            A[i], A[0] = A[0], A[i]
+            self.HeapSize -= 1
+            self.Max_Heapify(A, 0)
+        print(A)
 
 
-def Build_Max_heap(A):
-    max = math.floor(len(A)/2)
-    for i in range(max, 1, -1):
-        Max_Heapify(A, i)
+#A.insert(0,0)   #下标对齐
+maxH = Max_Heap(A)
+maxH.HeapSort(A)
 
-def HeapSort(A):
-
-    Build_Max_heap(A)
-    for i in range(len(A),2,-1):
-        A[i], A[1] = A[1], A[i]
-        ##HeapSize -= 1
-        Max_Heapify(A, 1)
-
-
-A.insert(0,0)   #下标对齐
-HeapSize = len(A)   #定义堆的大小
-HeapSort(A)
-print(A)
 
 #def Max_Heap_Insert():
 
