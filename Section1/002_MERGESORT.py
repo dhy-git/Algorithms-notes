@@ -4,8 +4,6 @@
 时间复杂度 O(n) = nlogn
 '''
 
-import math
-
 def Merge(L,R):
     A = []
     print(L,R)
@@ -23,7 +21,7 @@ def Merge(L,R):
 def Merge_Sort(L):
     if (len(L) <2):
         return L
-    middle = math.floor(len(L)/2)           #math模块中的floor方法，取不超过目标数的最大整数
+    middle = int(len(L)/2)          
     left, right = L[0:middle], L[middle:]
     #print(left,right)
     return Merge(Merge_Sort(left),Merge_Sort(right))
